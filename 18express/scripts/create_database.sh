@@ -13,7 +13,7 @@ dbca -silent -createDatabase \
 -recoveryAreaSize 0 \
 -characterSet AL32UTF8 \
 -redoLogFileSize 100 \
--enableArchive true \
+-enableArchive false \
 -useOMF true \
 -totalMemory 2048 \
 
