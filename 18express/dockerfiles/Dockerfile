@@ -12,6 +12,7 @@ COPY scripts/create_services.sh  /tmp/create_services.sh
 COPY scripts/start_services.sh  /tmp/start_services.sh
 COPY scripts/create_services.sql /tmp/create_services.sql
 COPY scripts/start_services.sql /tmp/start_services.sql
+COPY scripts/healthcheck.sh /tmp/healthcheck.sh
 RUN cd /tmp \
 && yum -y install oracle-database-preinstall-18c \
 && yum -y localinstall  oracle-database-xe-18c-1.0-1.x86_64.rpm  \
@@ -37,6 +38,7 @@ RUN cd /tmp \
 && mv /tmp/create_services.sql /home/oracle/scripts/create_services.sql \
 && mv /tmp/start_services.sh /home/oracle/scripts/start_services.sh \
 && mv /tmp/start_services.sql /home/oracle/scripts/start_services.sql \
+&& mv /tmp/healthcheck.sh /home/oracle/scripts/healthcheck.sh \
 && chmod  u=rwx,g=rx /home/oracle/scripts/*.sh \
 && chown oracle:oinstall /home/oracle/scripts/*.sh \
 && chown oracle:oinstall /home/oracle/scripts/*.sql \
@@ -47,5 +49,7 @@ USER oracle
 
 
 EXPOSE 1521 5500
+
+HEALTHCHECK --interval=5m --start-period=5m --timeout=5m CMD  ["/bin/bash","-c","/home/oracle/scripts/healthcheck.sh"] >/dev/null || exit 1
 
 CMD ["/bin/bash","-c","/home/oracle/scripts/startup.sh"]
