@@ -50,6 +50,6 @@ USER oracle
 
 EXPOSE 1521 5500
 
-HEALTHCHECK --interval=5m --start-period=5m --timeout=5m CMD  ["/bin/bash","-c","/home/oracle/scripts/healthcheck.sh"] >/dev/null || exit 1
+HEALTHCHECK --interval=5m --start-period=5m --timeout=2m CMD  ["/bin/bash","-c","/home/oracle/scripts/healthcheck.sh"] >/dev/null || exit 1
 
 CMD ["/bin/bash","-c","/home/oracle/scripts/startup.sh"]

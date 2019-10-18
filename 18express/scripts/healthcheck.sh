@@ -6,6 +6,8 @@ SET PAGESIZE 0 FEEDBACK OFF VERIFY OFF HEADING OFF ECHO OFF
 SELECT 'Alive' FROM dual;
 EXIT;
 EOF`
+date >> /tmp/alive.log
+echo $RETVAL >> /tmp/alive.log
 if [ "${RETVAL}" = "Alive" ]; then
   exit 0;
 else
