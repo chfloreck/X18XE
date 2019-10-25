@@ -25,6 +25,10 @@ RUN cd /tmp \
 && chown oracle:oinstall /home/oracle/scripts/ \
 && mkdir /home/oracle/bin \
 && chown oracle:oinstall /home/oracle/bin \
+&& mkdir -p "/backup/oracle" \
+&& chown -R oracle:oinstall "/backup/oracle" \
+&& chmod 775 /backup \
+&& chmod g+s /backup \
 && cd /tmp \
 && /tmp/oraclepw.sh \
 && rm /tmp/oraclepw.sh \
@@ -45,8 +49,10 @@ RUN cd /tmp \
 && chown oracle:oinstall /opt/oracle/product/18c/dbhomeXE/network/admin/*.ora \
 && su - oracle -c "/home/oracle/scripts/create_services.sh"
 
+
 USER oracle
 
+VOLUME ["/backup"]
 
 EXPOSE 1521 5500
 
